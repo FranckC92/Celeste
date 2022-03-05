@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Activite{% endblock %}
+
+{% block body %}
+    <h1>Activite</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ activite.id }}</td>
+            </tr>
+            <tr>
+                <th>ActiviteId</th>
+                <td>{{ activite.activiteId }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ activite.slug }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ activite.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ activite.description }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ activite.image }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ activite.dateDebut ? activite.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ activite.dateFin ? activite.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateCreation</th>
+                <td>{{ activite.dateCreation ? activite.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateModification</th>
+                <td>{{ activite.dateModification ? activite.dateModification|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_activite_index') }}">back to list</a>
+
+    <a href="{{ path('app_activite_edit', {'id': activite.id}) }}">edit</a>
+
+    {{ include('activite/_delete_form.html.twig') }}
+{% endblock %}
