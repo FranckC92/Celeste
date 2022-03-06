@@ -121,26 +121,26 @@ Le dossier templates contient les différents fichiers écrits selon le langage 
 
 Dans le cadre de Symfony, les formulaires sont un aspect très pris en charge et grandhement automatisé. Si, même en PHP/HTML classique, la rédaction et la prise en charge de formulaire sont un aspect essentiel des requêtes client et donc du fonctionnement général du site, en Symfony, cet aspect est encore davantage poussé grâce à la flexibilité du générateur de formulaire avec lequel il est possible de les spécialiser. Ce générateur est le Form Builder.
 
-```bash
-$ symfony console make:crud Commentaire                                                                    [16:59:35]
+```text
+$ symfony console make:crud Commentaire
 
  Choose a name for your controller class (e.g. CommentaireController) [CommentaireController]:
- > CommentaireAdminController
+ > Admin\CommentaireController
 
- created: src/Controller/CommentaireAdminController.php
- created: src/Form/CommentaireType.php
- created: templates/commentaire_admin/_delete_form.html.twig
- created: templates/commentaire_admin/_form.html.twig
- created: templates/commentaire_admin/edit.html.twig
- created: templates/commentaire_admin/index.html.twig
- created: templates/commentaire_admin/new.html.twig
- created: templates/commentaire_admin/show.html.twig
+ created: src/Controller/Admin/CommentaireController.php
+ created: src/Form/Commentaire4Type.php
+ created: templates/admin/commentaire/_delete_form.html.twig
+ created: templates/admin/commentaire/_form.html.twig
+ created: templates/admin/commentaire/edit.html.twig
+ created: templates/admin/commentaire/index.html.twig
+ created: templates/admin/commentaire/new.html.twig
+ created: templates/admin/commentaire/show.html.twig
 
 
   Success!
 
 
- Next: Check your new CRUD by going to /commentaire/admin/
+ Next: Check your new CRUD by going to /admin/commentaire/
 
 ```
 
@@ -149,25 +149,25 @@ $ symfony console make:crud Commentaire                                         
 De la même manière, un ensemble de pages peut être généré automatiquement selon le nom de Controller utilisé.
 
 ```bash
-$ symfony console make:crud Commentaire                                                                    [17:01:01]
+$ symfony console make:crud Commentaire
 
  Choose a name for your controller class (e.g. CommentaireController) [CommentaireController]:
- > CommentaireController
+ > Site\CommentaireController
 
- created: src/Controller/CommentaireController.php
- created: src/Form/Commentaire1Type.php
- created: templates/commentaire/_delete_form.html.twig
- created: templates/commentaire/_form.html.twig
- created: templates/commentaire/edit.html.twig
- created: templates/commentaire/index.html.twig
- created: templates/commentaire/new.html.twig
- created: templates/commentaire/show.html.twig
+ created: src/Controller/Site/CommentaireController.php
+ created: src/Form/Commentaire3Type.php
+ created: templates/site/commentaire/_delete_form.html.twig
+ created: templates/site/commentaire/_form.html.twig
+ created: templates/site/commentaire/edit.html.twig
+ created: templates/site/commentaire/index.html.twig
+ created: templates/site/commentaire/new.html.twig
+ created: templates/site/commentaire/show.html.twig
 
 
   Success!
 
 
- Next: Check your new CRUD by going to /commentaire/
+ Next: Check your new CRUD by going to /site/commentaire/
 
 ```
 

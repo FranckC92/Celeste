@@ -35,8 +35,8 @@
                 <td>{{ activite.dateCreation ? activite.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ activite.dateModification ? activite.dateModification|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_activite_show', {'id': activite.id}) }}">show</a>
-                    <a href="{{ path('app_activite_edit', {'id': activite.id}) }}">edit</a>
+                    <a href="{{ path('app_admin_activite_show', {'id': activite.id}) }}">show</a>
+                    <a href="{{ path('app_admin_activite_edit', {'id': activite.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -47,5 +47,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_activite_new') }}">Create new</a>
+    <a href="{{ path('app_admin_activite_new') }}">Create new</a>
 {% endblock %}
