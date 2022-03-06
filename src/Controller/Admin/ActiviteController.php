@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Activite;
 use App\Form\Activite3Type;
+use App\Form\Admin\ActiviteType;
 use App\Repository\ActiviteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,7 @@ class ActiviteController extends AbstractController
     public function new(Request $request, ActiviteRepository $activiteRepository): Response
     {
         $activite = new Activite();
-        $form = $this->createForm(Activite3Type::class, $activite);
+        $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

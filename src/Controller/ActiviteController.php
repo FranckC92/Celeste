@@ -3,14 +3,14 @@
 namespace App\Controller\Site;
 
 use App\Entity\Activite;
-use App\Form\Activite2Type;
+use App\Form\ActiviteType;
 use App\Repository\ActiviteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/site/activite')]
+#[Route('/activite')]
 class ActiviteController extends AbstractController
 {
     #[Route('/', name: 'app_site_activite_index', methods: ['GET'])]
@@ -25,7 +25,7 @@ class ActiviteController extends AbstractController
     public function new(Request $request, ActiviteRepository $activiteRepository): Response
     {
         $activite = new Activite();
-        $form = $this->createForm(Activite2Type::class, $activite);
+        $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

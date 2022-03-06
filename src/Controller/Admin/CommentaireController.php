@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Commentaire;
-use App\Form\CommentaireType;
+use App\Form\Admin\CommentaireType;
 use App\Repository\CommentaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
