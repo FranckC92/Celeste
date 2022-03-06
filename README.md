@@ -37,3 +37,16 @@ php                               \
   -dxdebug.mode=debug             \
   -dxdebug.start_with_request=yes
 ```
+
+### Contribuer au développement
+
+Par étape :
+
+1. Créer une entité
+2. Gérer les relations entre entités
+3. Migrer la base de données
+4. Insérer des données avec les fixtures
+5. Générer un CRUD pour l'administration
+6. Générer les pages publiques
+7. Appliquer le style sur toutes les pages
+8. Gérer les accès aux pages
