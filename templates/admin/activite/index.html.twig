@@ -1,49 +1,42 @@
 {% extends 'admin.html.twig' %}
 
-{% set title = 'Activite index' %}
+{% block title %}{{ parent() }}::Activite{% endblock %}
 
 {% block body %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>ActiviteId</th>
-                <th>Slug</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>DateDebut</th>
-                <th>DateFin</th>
-                <th>DateCreation</th>
-                <th>DateModification</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for activite in activites %}
-            <tr>
-                <td>{{ activite.id }}</td>
-                <td>{{ activite.activiteId }}</td>
-                <td>{{ activite.slug }}</td>
-                <td>{{ activite.titre }}</td>
-                <td>{{ activite.description }}</td>
-                <td>{{ activite.image }}</td>
-                <td>{{ activite.dateDebut ? activite.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ activite.dateFin ? activite.dateFin|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ activite.dateCreation ? activite.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ activite.dateModification ? activite.dateModification|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_admin_activite_show', {'id': activite.id}) }}">show</a>
-                    <a href="{{ path('app_admin_activite_edit', {'id': activite.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<h1>Activite</h1>
 
-    <a href="{{ path('app_admin_activite_new') }}">Create new</a>
+<div class="row">
+{% for activite in activites %}
+  <div class="col-sm-4 mb-3">
+    <div class="card h-100">
+      <img class="card-img-top" src="{{ asset(activite.image) }}" alt="Card image cap">
+      <div class="card-body text-white bg-dark">
+        <div class="card-title h5">{{ activite.titre }}</div>
+        <div class="card-text">{{ activite.image }}</div>
+        <div class="card-text p">{{ activite.description }}</div>
+        <div class="card-text">{{ activite.slug }}</div>
+        <div class="d-flex">
+          <div class="d-flex flex-column">
+            <div class="w-100 card-text small text-center">Date de début</div>
+            <div class="w-100 card-text small text-center">{{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}</div>
+          </div>
+
+          <div class="w-50 card-text small text-center">{{ activite.dateDebut ? activite.dateDebut|format_datetime('long', 'short', locale='fr') : '' }}</div>
+          <div class="w-50 card-text small text-center">{{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}</div>
+        </div>
+
+        <div class="card-text small">{{ activite.dateCreation ? activite.dateCreation|format_datetime('long', 'short', locale='fr') : '' }}</div>
+        <div class="card-text small">{{ activite.dateModification ? activite.dateModification|format_datetime('long', 'short', locale='fr') : '' }}</div>
+
+      </div>
+      <div class="card-footer d-flex p-3">
+        <a class="w-50 btn btn-success" href="{{ path('app_admin_activite_show', {'id': activite.id}) }}">Voir</a>
+        <a class="w-50 btn btn-warning" href="{{ path('app_admin_activite_edit', {'id': activite.id}) }}">Editer</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+<a href="{{ path('app_admin_activite_new') }}">Create new</a>
 {% endblock %}
