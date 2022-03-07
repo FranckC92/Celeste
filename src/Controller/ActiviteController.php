@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Site;
+namespace App\Controller;
 
 use App\Entity\Activite;
 use App\Form\ActiviteType;

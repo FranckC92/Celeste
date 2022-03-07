@@ -28,6 +28,18 @@ symfony console doctrine:migration:migrate
 symfony console doctrine:fixtures:load
 ```
 
+Construire les styles.
+
+```bash
+yarn dev
+```
+
+OU
+
+```bash
+yarn watch
+```
+
 Démarrage du serveur PHP.
 
 ```bash
