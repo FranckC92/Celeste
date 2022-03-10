@@ -28,6 +28,12 @@ symfony console doctrine:migration:migrate
 symfony console doctrine:fixtures:load
 ```
 
+Installer les styles.
+
+```bash
+yarn install
+```
+
 Construire les styles.
 
 ```bash
