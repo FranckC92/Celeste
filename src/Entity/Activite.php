@@ -40,6 +40,9 @@ class Activite
     #[ORM\Column(type: 'datetime')]
     private $dateModification;
 
+    #[ORM\ManyToOne(targetEntity: Commentaire::class, inversedBy: 'Activite')]
+    private $commentaireId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +152,18 @@ class Activite
     public function setDateModification(\DateTimeInterface $dateModification): self
     {
         $this->dateModification = $dateModification;
+
+        return $this;
+    }
+
+    public function getCommentaireId(): ?Commentaire
+    {
+        return $this->commentaireId;
+    }
+
+    public function setCommentaireId(?Commentaire $commentaireId): self
+    {
+        $this->commentaireId = $commentaireId;
 
         return $this;
     }
