@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/commentaire')]
 class CommentaireController extends AbstractController
 {
-    #[Route('/', name: 'app_admin_commentaire_index', methods: ['GET'])]
+    #[Route('/', name: 'admin_commentaire_index', methods: ['GET'])]
     public function index(CommentaireRepository $commentaireRepository): Response
     {
         return $this->render('admin/commentaire/index.html.twig', [
@@ -21,7 +21,7 @@ class CommentaireController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_admin_commentaire_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'admin_commentaire_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CommentaireRepository $commentaireRepository): Response
     {
         $commentaire = new Commentaire();
@@ -30,7 +30,7 @@ class CommentaireController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentaireRepository->add($commentaire);
-            return $this->redirectToRoute('app_admin_commentaire_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_commentaire_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('admin/commentaire/new.html.twig', [
@@ -39,7 +39,7 @@ class CommentaireController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_admin_commentaire_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'admin_commentaire_show', methods: ['GET'])]
     public function show(Commentaire $commentaire): Response
     {
         return $this->render('admin/commentaire/show.html.twig', [
@@ -47,7 +47,7 @@ class CommentaireController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_admin_commentaire_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'admin_commentaire_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Commentaire $commentaire, CommentaireRepository $commentaireRepository): Response
     {
         $form = $this->createForm(CommentaireType::class, $commentaire);
@@ -55,7 +55,7 @@ class CommentaireController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentaireRepository->add($commentaire);
-            return $this->redirectToRoute('app_admin_commentaire_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_commentaire_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('admin/commentaire/edit.html.twig', [
@@ -64,13 +64,13 @@ class CommentaireController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_admin_commentaire_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'admin_commentaire_delete', methods: ['POST'])]
     public function delete(Request $request, Commentaire $commentaire, CommentaireRepository $commentaireRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$commentaire->getId(), $request->request->get('_token'))) {
             $commentaireRepository->remove($commentaire);
         }
 
-        return $this->redirectToRoute('app_admin_commentaire_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_commentaire_index', [], Response::HTTP_SEE_OTHER);
     }
 }

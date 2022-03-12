@@ -1,11 +1,12 @@
-{% extends 'admin.html.twig' %}
+{% extends 'layout/admin.html.twig' %}
 
-{% block title %}{{ parent() }}::Activite{% endblock %}
+{% block title %}{{ parent() }} Activite{% endblock %}
+
+{% block pageTitle %}{{ parent() }} Activite{% endblock %}
 
 {% block body %}
-<h1>Activite</h1>
 
-<div class="row">
+<div class="row g-0 py-5 px-3">
 {% for activite in activites %}
   <div class="col-sm-4 mb-3">
     <div class="card h-100">
@@ -30,13 +31,15 @@
 
       </div>
       <div class="card-footer d-flex p-3">
-        <a class="w-50 btn btn-success" href="{{ path('app_admin_activite_show', {'id': activite.id}) }}">Voir</a>
-        <a class="w-50 btn btn-warning" href="{{ path('app_admin_activite_edit', {'id': activite.id}) }}">Editer</a>
+        <a class="w-50 btn btn-success" href="{{ path('admin_activite_show', {'id': activite.id}) }}">Voir</a>
+        <a class="w-50 btn btn-warning" href="{{ path('admin_activite_edit', {'id': activite.id}) }}">Editer</a>
       </div>
     </div>
   </div>
+{% else %}
+<h3>Pas encore d'activités enregistrées...</h3>
 {% endfor %}
 </div>
 
-<a href="{{ path('app_admin_activite_new') }}">Create new</a>
+<a href="{{ path('admin_activite_new') }}">Create new</a>
 {% endblock %}

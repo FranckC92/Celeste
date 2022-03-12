@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Tableau de bord &late;{% endblock %}</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+  {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+  {% block stylesheets %}
+  {{ encore_entry_link_tags('app') }}
+  <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+  {% endblock %}
+
+  {% block javascripts %}
+  {{ encore_entry_script_tags('app') }}
+  <script src="{{ asset('build/runtime.js') }}" defer></script>
+  <script src="{{ asset('build/app.js') }}" defer></script>
+  {% endblock %}
+</head>
+<body class="container-fluid p-0">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">{% block pageTitle %}Tableau de bord &late;{% endblock %}</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid vh-100 pt-5 bg-primary">
+    <div class="row g-0  h-100">
+      <aside class="col-3 h-100 pt-5 ps-5 pe-3">
+        <div class="h-100 bg-white">
+          {{ render(path('admin_meta_entities')) }}
+        </div>
+
+      </aside>
+
+      <section class="col-9 container-fluid h-100 p-0">
+        <div class="p-5">
+          <h2 class="text-white">Bienvenue !</h2>
+        </div>
+        <div class="bg-light">
+          {% block body %}{% endblock %}
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+</body>
+</html>
