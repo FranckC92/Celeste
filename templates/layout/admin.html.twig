@@ -26,40 +26,35 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="{{ path('admin_index') }}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
+            <a class="nav-link active" aria-current="page" href="{{ path('app_index') }}">Voir le site</a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>
 
-  <main class="container-fluid vh-100 pt-5 bg-primary">
-    <div class="row g-0  h-100">
-      <aside class="col-3 h-100 pt-5 ps-5 pe-3">
-        <div class="h-100 bg-white">
-          {{ render(path('admin_meta_entities')) }}
+  <main class="container-fluid h-100 p-0 pt-5 bg-light">
+    <div class="row g-0 h-100 ps-5">
+      <aside class="col-3 pt-5">
+        <div class="h-100 me-5">
+          <div class="h-100 shadow-lg rounded rounded-lg bg-white">
+            {{ render(path('admin_meta_entities')) }}
+          </div>
         </div>
-
       </aside>
 
-      <section class="col-9 container-fluid h-100 p-0">
-        <div class="p-5">
-          <h2 class="text-white">Bienvenue !</h2>
+      <section class="col-9">
+        <div class="container-fluid p-0 pe-5">
+          <div class="my-5 p-5 shadow-lg rounded rounded-lg bg-white">
+            <h2>Bienvenue !</h2>
+          </div>
+          <div class="shadow-lg rounded rounded-lg bg-white">
+            {% block body %}{% endblock %}
+          </div>
         </div>
-        <div class="bg-light">
-          {% block body %}{% endblock %}
-        </div>
-
       </section>
     </div>
   </main>

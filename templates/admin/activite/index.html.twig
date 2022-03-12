@@ -6,14 +6,20 @@
 
 {% block body %}
 
-<div class="row g-0 py-5 px-3">
+<div class="w-100 d-flex flex-row flex-nowrap justify-content-between pt-5">
+  <h2 class="mx-5">Liste des activités</h2>
+  <a class="btn btn-success mx-5"
+     href="{{ path('admin_activite_new') }}"
+  >Créer une activité</a>
+</div>
+
+<div class="row g-3 pt-5 px-5">
 {% for activite in activites %}
   <div class="col-sm-4 mb-3">
     <div class="card h-100">
       <img class="card-img-top" src="{{ asset(activite.image) }}" alt="Card image cap">
       <div class="card-body text-white bg-dark">
         <div class="card-title h5">{{ activite.titre }}</div>
-        <div class="card-text">{{ activite.image }}</div>
         <div class="card-text p">{{ activite.description }}</div>
         <div class="card-text">{{ activite.slug }}</div>
         <div class="d-flex">
@@ -41,5 +47,4 @@
 {% endfor %}
 </div>
 
-<a href="{{ path('admin_activite_new') }}">Create new</a>
 {% endblock %}
