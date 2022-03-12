@@ -41,14 +41,6 @@ class Commentaire
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
     private $reponses;
 
-    // #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'reponses')]
-    // private $parent;
-
-    // public function __construct()
-    // {
-    //     $this->reponses = new ArrayCollection();
-    // }
-
     public function getId(): ?int
     {
         return $this->id;
