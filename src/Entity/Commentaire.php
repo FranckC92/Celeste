@@ -15,14 +15,8 @@ class Commentaire
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 36)]
-    private $Commentaire;
-
-    #[ORM\Column(type: 'string', length: 36)]
-    private $commentaireID;
-
-    #[ORM\Column(type: 'string', length: 36, nullable: true)]
-    private $OnetoMany;
+    // #[ORM\Column(type: 'string', length: 36)]
+    // private $parentId;
 
     #[ORM\Column(type: 'string', length: 50)]
     private $slug;
@@ -39,54 +33,35 @@ class Commentaire
     #[ORM\Column(type: 'datetime')]
     private $dateModification;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'Activite')]
-    private $parentId;
+    #[ORM\ManyToOne(targetEntity: Activite::class, inversedBy: 'commentaires')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $activite;
 
-    #[ORM\OneToMany(mappedBy: 'parentId', targetEntity: self::class)]
-    private $Activite;
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'parent')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
+    private $reponses;
 
-    public function __construct()
-    {
-        $this->Activite = new ArrayCollection();
-    }
+    // #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'reponses')]
+    // private $parent;
+
+    // public function __construct()
+    // {
+    //     $this->reponses = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCommentaire(): ?string
+    public function getParentId(): ?string
     {
-        return $this->Commentaire;
+        return $this->parentId;
     }
 
-    public function setCommentaire(string $Commentaire): self
+    public function setParentId(string $parentId): self
     {
-        $this->Commentaire = $Commentaire;
-
-        return $this;
-    }
-
-    public function getCommentaireID(): ?string
-    {
-        return $this->commentaireID;
-    }
-
-    public function setCommentaireID(string $commentaireID): self
-    {
-        $this->commentaireID = $commentaireID;
-
-        return $this;
-    }
-
-    public function getOnetoMany(): ?string
-    {
-        return $this->OnetoMany;
-    }
-
-    public function setOnetoMany(?string $OnetoMany): self
-    {
-        $this->OnetoMany = $OnetoMany;
+        $this->parentId = $parentId;
 
         return $this;
     }
@@ -151,42 +126,54 @@ class Commentaire
         return $this;
     }
 
-    public function getParentId(): ?self
+    public function getActivite(): ?Activite
     {
-        return $this->parentId;
+        return $this->activite;
     }
 
-    public function setParentId(?self $parentId): self
+    public function setActivite(?Activite $activite): self
     {
-        $this->parentId = $parentId;
+        $this->activite = $activite;
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, self>
+     * @return Collection<string, self>
      */
-    public function getActivite(): Collection
+    public function getResponses(): Collection
     {
-        return $this->Activite;
+        return $this->reponses;
     }
 
-    public function addActivite(self $activite): self
+    public function addResponse(self $reponse): self
     {
-        if (!$this->Activite->contains($activite)) {
-            $this->Activite[] = $activite;
-            $activite->setParentId($this);
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses[] = $reponse;
+            $reponse->setParent($this);
         }
 
         return $this;
     }
 
-    public function removeActivite(self $activite): self
+    public function removeResponse(self $reponse): self
     {
-        if ($this->Activite->removeElement($activite)) {
+        if ($this->reponses->removeElement($reponse)) {
             // set the owning side to null (unless already changed)
-            if ($activite->getParentId() === $this) {
-                $activite->setParentId(null);
+            if ($reponse->getParent() === $this) {
+                $reponse->setParent(null);
             }
         }
 

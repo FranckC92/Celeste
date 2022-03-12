@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActiviteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActiviteRepository::class)]
@@ -12,9 +14,6 @@ class Activite
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
-
-    #[ORM\Column(type: 'string', length: 36)]
-    private $activiteId;
 
     #[ORM\Column(type: 'string', length: 50)]
     private $slug;
@@ -40,24 +39,17 @@ class Activite
     #[ORM\Column(type: 'datetime')]
     private $dateModification;
 
-    #[ORM\ManyToOne(targetEntity: Commentaire::class, inversedBy: 'Activite')]
-    private $commentaireId;
+    #[ORM\OneToMany(mappedBy: 'activite', targetEntity: Commentaire::class)]
+    private $commentaires;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getActiviteId(): ?string
-    {
-        return $this->activiteId;
-    }
-
-    public function setActiviteId(string $activiteId): self
-    {
-        $this->activiteId = $activiteId;
-
-        return $this;
     }
 
     public function getSlug(): ?string
@@ -156,14 +148,32 @@ class Activite
         return $this;
     }
 
-    public function getCommentaireId(): ?Commentaire
+    /**
+     * @return Collection<string, Commentaire>
+     */
+    public function getCommentaires(): Collection
     {
-        return $this->commentaireId;
+        return $this->commentaires;
     }
 
-    public function setCommentaireId(?Commentaire $commentaireId): self
+    public function addCommentaire(Commentaire $commentaire): self
     {
-        $this->commentaireId = $commentaireId;
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setActivite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getActivite() === $this) {
+                $commentaire->setActivite(null);
+            }
+        }
 
         return $this;
     }

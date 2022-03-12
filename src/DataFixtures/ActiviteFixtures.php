@@ -3,51 +3,35 @@
 namespace App\DataFixtures;
 
 use App\Entity\Activite;
+use App\Entity\Commentaire;
+use App\Service\LoremGenerator;
 use DateInterval;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\String\Slugger\AsciiSlugger;
-use function Symfony\Component\String\u;
 
 
 class ActiviteFixtures extends Fixture
 {
-    public function loadLoremIpsumFromFile()
+    private LoremGenerator $lorem;
+
+    public function __construct(LoremGenerator $lorem)
     {
-        $ipsumFile    = new File(__DIR__ . '/../../snippets/ipsum.txt');
-        $ipsumContent = $ipsumFile->getContent();
-        $ipsumLines   = u( $ipsumContent )->split('.');
-        $ipsumResult  = [];
-
-        foreach ( $ipsumLines as $value ) {
-
-            $line = $value->trim()->toString();
-            if ( !empty($line) ) {
-
-                array_push($ipsumResult, $line);
-            }
-        }
-
-        array_unique( $ipsumResult );
-
-        return $ipsumResult;
+        $this->lorem = $lorem;
     }
 
-    public function load(ObjectManager $manager): void
+    public function load(ObjectManager $manager, ): void
     {
-        $loremIpsum = $this->loadLoremIpsumFromFile();
-        $ipsumCount = sizeof( $loremIpsum );
         $dateNow    = new DateTime();
         $slugger    = new AsciiSlugger();
+        $auteurs    = [ 'Humain', 'Elfe', 'Troll', 'Gobelin' ];
 
-        for ($i = 0; $i < 100; $i++) {
-
-            $activiteId  = Uuid::uuid4();
-            $titre       = 'Activité #' . random_int(100, 999);
-            $description = $loremIpsum[ random_int(0, $ipsumCount-1) ];
+        $activites = [];
+        for ( $i=0; $i<6; $i++ ) {
+            $titre       = 'Activité #' . random_int( 100, 999 );
+            $description = $this->lorem->generate( 'lg' );
             $image       = 'img/noimage.jpg';
             $slug        = $slugger->slug( strtolower( $titre ), '-' );
             $dateDebut   = new DateTime();
@@ -65,11 +49,37 @@ class ActiviteFixtures extends Fixture
             $activite->setDateFin( $dateFin );
 
             $activite->setSlug( $slug );
-            $activite->setActiviteId( $activiteId );
             $activite->setDateCreation( $dateNow );
             $activite->setDateModification( $dateNow );
 
-            $manager->persist($activite);
+            $manager->persist( $activite );
+
+            $activites[] = $activite;
+        }
+
+        $manager->flush();
+
+        foreach ( $activites as $activite ) {
+            for ( $i=0; $i<3; $i++ ) {
+                $commentaire = new Commentaire();
+
+                $commentaire->setAuteur( $auteurs[ random_int( 0, (sizeof( $auteurs ) - 1) ) ] );
+                $commentaire->setContenu( $this->lorem->generate( 'lg' ) );
+                $commentaire->setSlug( (Uuid::uuid4())->toString() );
+
+                $commentaireCreeLe  = new DateTime();
+                $commentaireModifie = new DateTime();
+
+                $commentaireCreeLe->add( new DateInterval('PT3H') );
+                $commentaireModifie->add( new DateInterval('PT10M') );
+
+                $commentaire->setDateCreation( $commentaireCreeLe );
+                $commentaire->setDateModification( $commentaireModifie );
+
+                $commentaire->setActivite( $activite );
+
+                $manager->persist( $commentaire );
+            }
         }
 
         $manager->flush();
