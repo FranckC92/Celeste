@@ -13,28 +13,46 @@
   >Créer une activité</a>
 </div>
 
-<div class="row g-3 pt-5 px-5">
-{% for activite in activites %}
-  <div class="col-sm-4 mb-3">
+<div class="row gy-5 pt-5 px-5">
+  {% for activite in activites %}
+  <div class="col-12">
     <div class="card h-100">
-      <img class="card-img-top" src="{{ asset(activite.image) }}" alt="Card image cap">
-      <div class="card-body text-white bg-dark">
-        <div class="card-title h5">{{ activite.titre }}</div>
-        <div class="card-text p">{{ activite.description }}</div>
-        <div class="card-text">{{ activite.slug }}</div>
-        <div class="d-flex">
-          <div class="d-flex flex-column">
-            <div class="w-100 card-text small text-center">Date de début</div>
-            <div class="w-100 card-text small text-center">{{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}</div>
+      <div class="card-header p-0 bg-dark text-white">
+        <div class="h5 p-3 m-0 text-center">{{ activite.titre }}</div>
+      </div>
+      <div class="card-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-4">
+              <img class="img-fluid" src="{{ asset(activite.image) }}" alt="Card image cap">
+            </div>
+            <div class="col-8">
+              <div class="p mb-3">{{ activite.description }}</div>
+              <div class="container-fluid p-0">
+                <div class="row mb-3 py-3 bg-light text-dark">
+                  <div class="col-6">
+                    <div class="w-100 small text-center">Date de début</div>
+                    <div class="w-100 small text-center">{{ activite.dateDebut ? activite.dateDebut|format_datetime('long', 'short', locale='fr') : '' }}</div>
+                  </div>
+                  <div class="col-6">
+                    <div class="w-100 small text-center">Date de début</div>
+                    <div class="w-100 small text-center">{{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="small">Créée le: {{ activite.dateCreation ? activite.dateCreation|format_datetime('long', 'short', locale='fr') : '' }}</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="small">Modifiée le: {{ activite.dateModification ? activite.dateModification|format_datetime('long', 'short', locale='fr') : '' }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div class="w-50 card-text small text-center">{{ activite.dateDebut ? activite.dateDebut|format_datetime('long', 'short', locale='fr') : '' }}</div>
-          <div class="w-50 card-text small text-center">{{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}</div>
         </div>
-
-        <div class="card-text small">{{ activite.dateCreation ? activite.dateCreation|format_datetime('long', 'short', locale='fr') : '' }}</div>
-        <div class="card-text small">{{ activite.dateModification ? activite.dateModification|format_datetime('long', 'short', locale='fr') : '' }}</div>
-
       </div>
       <div class="card-footer d-flex p-3">
         <a class="w-50 btn btn-success" href="{{ path('admin_activite_show', {'id': activite.id}) }}">Voir</a>
@@ -42,9 +60,9 @@
       </div>
     </div>
   </div>
-{% else %}
-<h3>Pas encore d'activités enregistrées...</h3>
-{% endfor %}
+  {% else %}
+  <h3>Pas encore d'activités enregistrées...</h3>
+  {% endfor %}
 </div>
 
 {% endblock %}

@@ -1,3 +1,4 @@
+{% set currentPath = path(app.request.attributes.get('_route')) %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
   <script src="{{ asset('build/app.js') }}" defer></script>
   {% endblock %}
 </head>
-<body class="container-fluid p-0">
+<body class="min-vh-100 min-vw-100 p-0">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">{% block pageTitle %}Tableau de bord &late;{% endblock %}</a>
@@ -26,21 +27,24 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ path('admin_index') }}">Home</a>
+            <a class="nav-link {{ currentPath == path('admin_index') ? 'active' : '' }}" aria-current="page" href="{{ path('admin_index') }}">Démarrer</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ path('app_index') }}">Voir le site</a>
+            <a class="nav-link" aria-current="page" href="{{ path('app_index') }}">
+            <span class="me-3">|</span>
+              Voir le site
+            </a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <main class="container-fluid h-100 p-0 pt-5 bg-light">
-    <div class="row g-0 h-100 ps-5">
+  <main class="container-fluid p-0 pt-5 bg-light">
+    <div class="row g-0 min-vh-100 ps-5 pb-5">
       <aside class="col-3 pt-5">
         <div class="h-100 me-5">
-          <div class="h-100 shadow-lg rounded rounded-lg bg-white">
+          <div class="h-100 shadow-lg bg-white">
             {{ render(path('admin_meta_entities')) }}
           </div>
         </div>
@@ -48,10 +52,10 @@
 
       <section class="col-9">
         <div class="container-fluid p-0 pe-5">
-          <div class="my-5 p-5 shadow-lg rounded rounded-lg bg-white">
-            <h2>Bienvenue !</h2>
+          <div class="my-5 p-5 shadow-lg rounded rounded-3 bg-dark text-light">
+            <h2>Bienvenue sur le tableau de bord !</h2>
           </div>
-          <div class="shadow-lg rounded rounded-lg bg-white">
+          <div class="min-vh-100 shadow-lg rounded rounded-lg bg-white p-5">
             {% block body %}{% endblock %}
           </div>
         </div>
