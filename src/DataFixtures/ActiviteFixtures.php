@@ -29,7 +29,7 @@ class ActiviteFixtures extends Fixture
         $auteurs    = [ 'Humain', 'Elfe', 'Troll', 'Gobelin' ];
 
         $activites = [];
-        for ( $i=0; $i<6; $i++ ) {
+        for ( $i=0; $i<20; $i++ ) {
             $titre       = 'Activité #' . random_int( 100, 999 );
             $description = $this->lorem->generate( 'lg' );
             $image       = 'img/noimage.jpg';
@@ -60,7 +60,7 @@ class ActiviteFixtures extends Fixture
         $manager->flush();
 
         foreach ( $activites as $activite ) {
-            for ( $i=0; $i<3; $i++ ) {
+            for ( $i=0; $i<5; $i++ ) {
                 $commentaire = new Commentaire();
 
                 $commentaire->setAuteur( $auteurs[ random_int( 0, (sizeof( $auteurs ) - 1) ) ] );
