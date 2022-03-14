@@ -1,68 +1,80 @@
 {% extends 'layout/admin.html.twig' %}
 
-{% block title %}{{ parent() }} Activite{% endblock %}
+{% block title %}Activite{% endblock %}
 
-{% block pageTitle %}{{ parent() }} Activite{% endblock %}
+{% block pageTitle %}
+<div class="d-block mb-3 text-center text-white">
+  <i class="fa-regular fa-calendar-days fa-6x"></i>
+</div>
+<h3 class="text-center text-white">
+  Liste des activités
+</h3>
+{% endblock %}
+
+{% block pageActions %}
+<a class="btn btn-teal fw-bold shadow rounded-pill" href="{{ path('admin_activite_new') }}">
+  <div class="mx-5 my-4 d-flex flex-row align-items-stretch">
+    <i class="fas fa-calendar-check fa-2x"></i>
+    <div class="ms-3 d-flex align-items-center">
+      <span>Créer une nouvelle activité</span>
+    </div>
+  </div>
+</a>
+{% endblock %}
+
 
 {% block body %}
-
-<div class="w-100 d-flex flex-row flex-nowrap justify-content-between pt-5">
-  <h2 class="mx-5">Liste des activités</h2>
-  <a class="btn btn-success mx-5"
-     href="{{ path('admin_activite_new') }}"
-  >Créer une activité</a>
-</div>
-
-<div class="row gy-5 pt-5 px-5">
-  {% for activite in activites %}
-  <div class="col-12">
-    <div class="card h-100">
-      <div class="card-header p-0 bg-dark text-white">
-        <div class="h5 p-3 m-0 text-center">{{ activite.titre }}</div>
-      </div>
-      <div class="card-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-4">
-              <img class="img-fluid" src="{{ asset(activite.image) }}" alt="Card image cap">
-            </div>
-            <div class="col-8">
-              <div class="p mb-3">{{ activite.description }}</div>
-              <div class="container-fluid p-0">
-                <div class="row mb-3 py-3 bg-light text-dark">
-                  <div class="col-6">
-                    <div class="w-100 small text-center">Date de début</div>
-                    <div class="w-100 small text-center">{{ activite.dateDebut ? activite.dateDebut|format_datetime('long', 'short', locale='fr') : '' }}</div>
-                  </div>
-                  <div class="col-6">
-                    <div class="w-100 small text-center">Date de début</div>
-                    <div class="w-100 small text-center">{{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}</div>
-                  </div>
+<div class="container-fluid p-0">
+  <div class="row g-0">
+    {% for activite in activites %}
+    <div class="col-md-4 pe-3 pb-3">
+      <div class="card shadow border-0 ms-3 mt-3">
+        <div class="card-header bg-cyan text-dark">
+          <div class="h5 m-0 text-end small fw-bold">
+            {{ activite.titre }}
+          </div>
+        </div>
+        <div class="card-body bg-light text-dark p-0">
+          <div class="container-fluid">
+            <div class="row g-0 justify-content-around bg-white">
+              <div class="col-12 p-3 bg-secondary text-white">
+                <p>
+                  {{ activite.description }}
+                </p>
+              </div>
+              <div class="col-6 p-3">
+                <div class="p small fw-bold">
+                  Date de début
                 </div>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="small">Créée le: {{ activite.dateCreation ? activite.dateCreation|format_datetime('long', 'short', locale='fr') : '' }}</div>
-                  </div>
+                <div class="p small">
+                  {{ activite.dateDebut ? activite.dateDebut|format_datetime('long', 'short', locale='fr') : '' }}
                 </div>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="small">Modifiée le: {{ activite.dateModification ? activite.dateModification|format_datetime('long', 'short', locale='fr') : '' }}</div>
-                  </div>
+              </div>
+              <div class="col-6 p-3">
+                <div class="p small fw-bold">
+                  Date de fin
+                </div>
+                <div class="p small">
+                  {{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card-footer d-flex p-3">
-        <a class="w-50 btn btn-success" href="{{ path('admin_activite_show', {'id': activite.id}) }}">Voir</a>
-        <a class="w-50 btn btn-warning" href="{{ path('admin_activite_edit', {'id': activite.id}) }}">Editer</a>
+        <div class="card-footer d-flex flex-column justify-content-end py-3 bg-light text-dark">
+          <div class="small fw-bold mb-3 text-end">
+            Commentaires ({{ activite.commentaires|length }})
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-teal rounded-pill ms-3" href="{{ path('admin_activite_show', {'id': activite.id}) }}">Voir</a>
+            <a class="btn btn-teal rounded-pill ms-3" href="{{ path('admin_activite_edit', {'id': activite.id}) }}">Editer</a>
+          </div>
+        </div>
       </div>
     </div>
+    {% else %}
+    <h3>Pas encore d'activités enregistrées...</h3>
+    {% endfor %}
   </div>
-  {% else %}
-  <h3>Pas encore d'activités enregistrées...</h3>
-  {% endfor %}
 </div>
-
 {% endblock %}
