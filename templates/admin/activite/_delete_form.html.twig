@@ -1,4 +1,7 @@
 <form method="post" action="{{ path('admin_activite_delete', {'id': activite.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activite.id) }}">
-    <button class="btn">Delete</button>
+  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ activite.id) }}">
+  <button class="action action-red">
+    <i class="fa-solid fa-calendar-xmark fa-1x"></i>
+    <span class="ms-2 ps-2 border-start border-white">Supprimer l'activité</span>
+  </button>
 </form>

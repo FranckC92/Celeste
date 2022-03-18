@@ -1,0 +1,63 @@
+{% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}A propos &late;{% endblock %}</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+  {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+  {% block stylesheets %}
+  {{ encore_entry_link_tags('admin') }}
+  <link rel="stylesheet" href="{{ asset('build/admin.css') }}">
+  {% endblock %}
+
+  {% block javascripts %}
+  {{ encore_entry_script_tags('admin') }}
+  <script src="{{ asset('build/runtime.js') }}" defer></script>
+  <script src="{{ asset('build/admin.js') }}" defer></script>
+  {% endblock %}
+</head>
+<body class="about">
+
+  {{ include('admin/_nav.html.twig') }}
+
+  <main class="main">
+
+    <section class="d-flex flex-column flex-nowrap">
+      <!-- .hero -->
+      <div class="hero">
+        <!-- .hero-wrapper --->
+        <div class="hero-content">
+          <!-- ?logo -->
+          <div class="d-block">
+            {% block pageLogo %}<i class="fa-regular fa-paper-plane fa-6x"></i>{% endblock %}
+          </div>
+          <!-- ?title -->
+          <h1 class="title">
+            {% block pageTitle %}A propos{% endblock %}
+          </h1>
+          <!-- ?subtitle -->
+          <h3 class="subtitle">
+            {% block pageSubtitle %}Que ferons-nous ensuite ?{% endblock %}
+          </h3>
+          <!-- #pageActions -->
+          <nav class="actions">
+            {% block pageActions %}{% endblock %}
+          </nav>
+        </div>
+
+      </div>
+      <!-- #pageBody -->
+      <div class="row g-0 p-5">
+        <div class="col-12">
+          <div class="container-fluid p-0">
+            {% block body %}{% endblock %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

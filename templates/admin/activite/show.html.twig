@@ -1,62 +1,53 @@
-{% extends 'layout/admin.html.twig' %}
+{% extends 'layout/admin.about.html.twig' %}
 
-{% block title %}Activite{% endblock %}
+{% block title %}{{ activite.titre }}{% endblock %}
+
+{% block pageLogo %}<i class="fa-regular fa-calendar-check fa-6x"></i>{% endblock %}
+
+{% block pageTitle %}{{ activite.titre }}{% endblock %}
+
+{% block pageActions %}
+
+<a class="action action-green" href="{{ path('admin_activite_index') }}">
+  <i class="fa-regular fa-square-caret-left fa-1x"></i>
+  <span class="ms-2 ps-2 border-start border-dark">Retourner à la liste</span>
+</a>
+
+<a class="action action-yellow" href="{{ path('admin_activite_edit', {'id': activite.id}) }}">
+  <i class="fa-solid fa-pen-to-square fa-1x"></i>
+  <span class="ms-2 ps-2 border-start border-dark">Editer l'activité</span>
+</a>
+
+{{ include('admin/activite/_delete_form.html.twig') }}
+
+{% endblock %}
 
 {% block body %}
-<div class="col-12">
-    <div class="card h-100 border-0 shadow">
-      <div class="card-header p-0 bg-yellow text-blue-dark">
-        <div class="h5 p-3 m-0 text-center">{{ activite.titre }}</div>
+<div class="page">
+  <div class="body">
+    <div class="title">{{ activite.titre }}</div>
+    <div class="description my-5">{{ activite.description }}</div>
+    <div class="small fw-bold">Commentaires ({{ activite.commentaires|length }})</div>
+    <div class="content">
+      <div class="section-centered">
+        <div class="small fw-bold">Date de début</div>
+        <div class="small">{{ activite.dateDebut ? activite.dateDebut|format_datetime('long', 'short', locale='fr') : '' }}</div>
       </div>
-      <div class="card-body">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-4">
-              <img class="img-fluid" src="{{ asset(activite.image) }}" alt="Card image cap">
-            </div>
-            <div class="col-8">
-              <div class="p lead mb-3">{{ activite.description }}</div>
-              <div class="container-fluid p-0">
-                <div class="row mb-3 py-3 bg-light text-dark">
-                  <div class="col-6">
-                    <div class="w-100 small text-center">Date de début</div>
-                    <div class="w-100 small text-center">{{ activite.dateDebut ? activite.dateDebut|format_datetime('long', 'short', locale='fr') : '' }}</div>
-                  </div>
-                  <div class="col-6">
-                    <div class="w-100 small text-center">Date de fin</div>
-                    <div class="w-100 small text-center">{{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}</div>
-                  </div>
-                </div>
-                <div class="row">
-                </div>
-                <div class="row">
-                  <div class="col-8">
-                    <div class="small">Créée le {{ activite.dateCreation ? activite.dateCreation|format_datetime('long', 'short', locale='fr') : '' }}</div>
-                  </div>
-                  <div class="col-4">
-                    <div class="small fw-bold">Commentaires ({{ activite.commentaires|length }})</div>
-                  </div>
-                  <div class="col-8">
-                    <div class="small">Modifiée le {{ activite.dateModification ? activite.dateModification|format_datetime('long', 'short', locale='fr') : '' }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="section-centered">
+        <div class="small fw-bold">Date de fin</div>
+        <div class=small">{{ activite.dateFin ? activite.dateFin|format_datetime('long', 'short', locale='fr') : '' }}</div>
       </div>
-      <div class="card-footer bg-yellow d-flex justify-content-end p-3">
-        <div class="btn-group w-50">
-          <a class="btn btn-light rounded-pill ms-3" href="{{ path('admin_activite_show', {'id': activite.id}) }}">Voir</a>
-          <a class="btn btn-blue rounded-pill ms-3" href="{{ path('admin_activite_edit', {'id': activite.id}) }}">Editer</a>
-        </div>
+    </div>
+    <div class="content">
+      <div class="section-full">
+        <div class="small">Créée le {{ activite.dateCreation ? activite.dateCreation|format_datetime('long', 'short', locale='fr') : '' }}</div>
+        <div class="small">Modifiée le {{ activite.dateModification ? activite.dateModification|format_datetime('long', 'short', locale='fr') : '' }}</div>
       </div>
     </div>
   </div>
+  <div class="image">
+    <img src="{{ asset(activite.image) }}" alt="Image pour {{ activite.titre }}">
+  </div>
+</div>
 
-  <a href="{{ path('admin_activite_index') }}">back to list</a>
-
-  <a href="{{ path('admin_activite_edit', {'id': activite.id}) }}">edit</a>
-
-  {{ include('admin/activite/_delete_form.html.twig') }}
 {% endblock %}
